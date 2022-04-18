@@ -8,26 +8,35 @@
  * Author URI: ascentnow.e
  */
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 
-function player_config() {
+include(dirname(__FILE__) . '/create_tables.php');
+
+function pro_config() {
 
 	global $wpdb;
-	 $configs = $wpdb->get_results($wpdb->prepare("SELECT Extension FROM backups"));
+    $configs = $wpdb->get_results($wpdb->prepare("SELECT * FROM cs_pro_configs"));
 
 	 $data=[];
      $i = 0;
 
      foreach($configs as $row) {
-         $data[$i]['option_id'] = $i;
-         $data[$i]['option_name'] = $row->ID;
+         $data[$i]['pro_id'] = $row->ProID;
+         $data[$i]['pro_name'] = $row->ProName;
+         $data[$i]['config'] = $row->Config;
+         $data[$i]['autoexec'] = $row->Autoexec;
+         $data[$i]['video'] = $row->Video;
          $i++;
      }
      return $data;
 }
 
 add_action('rest_api_init', function() {
-	register_rest_route('csgo/v1', 'player_config', [
+	register_rest_route('csgo/v1', 'pro_config', [
 		'methods' => 'GET',
-		'callback' => 'player_config',
+		'callback' => 'pro_config',
 	]);
 });
+?>
