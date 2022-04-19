@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Custom API
+ * Plugin Name: ascent API
  * Plugin URI: http://ascentnow.eu
  * Description: Crushing it!
  * Version: 1.0
